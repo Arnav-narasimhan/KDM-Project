@@ -1,0 +1,92 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from input_popup import get_parameters
+from simulation import run_speed_sweep
+from plots import plot_results
+
+
+def main():
+
+    # ========================================================
+    # OPEN PARAMETER POPUP
+    # ========================================================
+
+    parameters = get_parameters()
+
+
+    # User cancelled
+    if not parameters:
+
+        print(
+            "Simulation cancelled."
+        )
+
+        return
+
+
+    # ========================================================
+    # RUN SPEED SWEEP
+    # ========================================================
+
+    results = run_speed_sweep(
+        parameters
+    )
+
+
+    # ========================================================
+    # DISPLAY CRITICAL SPEED
+    # ========================================================
+
+    critical_speed = results[
+        "critical_speed"
+    ]
+
+
+    print()
+
+    print(
+        "=============================================="
+    )
+
+    print(
+        "          ADAS SPEED SWEEP RESULTS"
+    )
+
+    print(
+        "=============================================="
+    )
+
+
+    if critical_speed is not None:
+
+        print(
+            f"Critical speed: "
+            f"{critical_speed:.0f} km/h"
+        )
+
+    else:
+
+        print(
+            "No lane-change failure detected "
+            "in the selected speed range."
+        )
+
+
+    print(
+        "=============================================="
+    )
+
+
+    # ========================================================
+    # PLOT RESULTS
+    # ========================================================
+
+    plot_results(
+        results,
+        parameters
+    )
+
+
+if __name__ == "__main__":
+
+    main()
